@@ -1,0 +1,25 @@
+.add-todo {
+  margin-top: 40px;
+  
+  &_label {
+    display: block;
+  }
+
+  &_field {
+    display: block;
+
+    margin-top: 8px;
+    padding: 8px 24px;
+
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+
+  &_button {
+    margin-top: 8px;
+    padding: 8px 24px;
+
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+}

@@ -1,0 +1,63 @@
+@import 'packages/task/task.scss';
+@import '../add-todo/add-todo.scss';
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower|Nunito');
+
+.tasks {
+  display: flex;
+  flex-wrap: wrap;
+
+  width: 1000px;
+  margin: 48px auto;
+  padding: 40px;
+
+	border-radius: 2px;
+	background-color: #FFF176;
+  box-shadow: 0 0 5px rgba(#000, 0.5);
+
+
+  &__list {
+		flex-basis: 400px;
+
+		box-sizing: border-box;
+		min-height: 500px;
+		margin: 20px auto;
+		padding: 20px;
+
+		background:#FFF9C4;
+		box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.9);
+  };
+
+	&__title {
+		color: #009688;
+	}
+}
+.add-task {
+	margin-left: 20px;
+
+	&__field {
+		margin: 10px;
+		padding: 5px 25px;
+
+		border: 1px dashed #ccc;
+		border-radius: 2px;
+
+		font-family: 'Indie Flower', cursive;
+		font-size: 20px;
+
+		&::placeholder {
+			color: #1565C0;
+		}
+
+	}
+
+	&__button {
+		padding: 5px;
+
+		color: #2196F3;
+		border: 2px solid #000;
+		border-radius: 3px;
+    background-color: #BBDEFB;
+
+	}
+}
+

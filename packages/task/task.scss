@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower|Nunito');
+
+.task {
+	display: flex;
+  flex-wrap: wrap;
+
+	margin-top: 10px;
+  padding: 8px 24px;
+
+  cursor: pointer;
+
+	border-radius: 3px;
+	background-color: #F9A825;
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.9);
+
+  font-family: 'Indie Flower', cursive;
+	font-size: 20px;
+
+  & + & {
+    border-top: 1px solid #ccc;
+  }
+
+  &_done {
+    text-decoration: line-through;
+
+	  background-color: #EEEEEE;
+  }
+
+	&__added-time {
+    width: 90%;
+		padding: 5px;
+
+		color: #424242;
+
+		font-family: 'Nunito', sans-serif;
+		font-size: 15px;
+		font-weight: bold;
+	}
+  &__color {
+		width: 10px;
+		height: 10px;
+		margin: 10px  5px;
+
+		border-radius: 50%;
+		background-color: #76FF03;
+	}
+	&__color_high-priority{
+		background-color: #D50000;
+	}
+}
+.delete-icon {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 10px;
+  margin-left: 300px;
+
+  background: url(image/delete-icon.png) no-repeat;
+  background-size: cover;
+
+  &:active {
+    border-radius: 50%;
+    background-color: #ccc;
+  }
+  &:hover {
+    opacity: 0.5;
+  }
+}
