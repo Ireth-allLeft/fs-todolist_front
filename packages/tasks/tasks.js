@@ -1,7 +1,7 @@
 const { createElement, Component } = require('react');
 const { div, h2 } = require('react-dom-factories');
-const TodoItem = require('task/task');
-const AddTodo = require('add-todo/add-todo');
+const Task = require('task/task');
+const AddTask = require('add-task/add-task');
 const className = require('class-name/class-name');
 const { responseStatuses } = require('core/constants');
 const createRequest = require('core/create-request');
@@ -9,7 +9,7 @@ const Messages = require('messages/messages');
 const locale = require('core/locale.js');
 
 
-class TodoList extends Component {
+class TasksList extends Component {
   constructor(...args) {
     super(...args);
 
@@ -17,49 +17,11 @@ class TodoList extends Component {
       tasks: [],
       isLoading: true,
       messages: [],
-
-    /* todos: [
-        {
-          id: '100001',
-          text: '1 задача',
-          isCompleted: false,
-          priorityColor: 'red',
-          addedDate: 1525962102,
-        },
-        {
-          id: '100002',
-          text: '2 задача',
-          isCompleted: true,
-          priorityColor: 'green',
-          addedDate: 1525962102,
-        },
-        {
-          id: '100003',
-          text: '3 задача',
-          isCompleted: true,
-          priorityColor: 'red',
-          addedDate: 1525962102,
-        },
-        {
-          id: '100004',
-          text: '4 задача',
-          isCompleted: false,
-          priorityColor: 'red',
-          addedDate: 1525962102,
-        },
-        {
-          id: '100005',
-          text: '5 задача',
-          isCompleted: false,
-          priorityColor: 'green',
-          addedDate: 1525962102,
-        },
-      ], */
-
     };
 
-    this.addTodo = this.addTodo.bind(this);
-    this.toggleTodo = this.toggleTodo.bind(this);
+    this.addTask = this.addTask.bind(this);
+    this.toggleTask = this.toggleTask.bind(this);
+    this.removeTask = this.removeTask.bind(this);
   }
 
   componentDidMount() {
@@ -68,7 +30,7 @@ class TodoList extends Component {
     });
   }
 
-  addTodo(text) {
+  addTask(text) {
     const { tasks } = this.state;
 
     this.setState({ isLoading: true });
@@ -80,17 +42,9 @@ class TodoList extends Component {
         this.setState({ isLoading: false, messages: response.messages });
       }
     });
-    /*
-    const { todos } = this.state;
-
-    const lastTodoId = todos[todos.length - 1].id;
-    const id = Number(lastTodoId) + 1;
-    todos.push({ id: String(id), text, isCompleted: false });
-
-    this.setState({ todos }); */
   }
 
-  toggleTodo(id) {
+  toggleTask(id) {
     const { tasks } = this.state;
     let task = tasks.find((item) => item.id === id);
 
@@ -103,27 +57,53 @@ class TodoList extends Component {
         this.setState({ isLoading: false, messages: response.messages });
       }
     });
-
-    /*  const { todos } = this.state;
-
-    const todo = todos.find((item) => item.id === id);
-    todo.isCompleted = !todo.isCompleted;
-*/
-    this.setState({ tasks });
   }
 
   togglePriority(id) {
     const { tasks } = this.state;
+    let task = tasks.find((item) => item.id === id);
 
-    const priority = tasks.find((item) => item.id === id);
-    let color = priority.priorityColor;
-    if (color === 'red') {
-      color = 'green';
-    } else {
-      color = 'red';
+    function priority(item) {
+		  if (item.priorityColor === 'red') {
+		    return true;
+		  }
+		  return false;
     }
 
-    this.setState({ tasks });
+    this.setState({ isLoading: true });
+    createRequest('changePriorityToHigh', { id }, { priorityColor: 'red' }).then((response) => {
+      if (response.status === responseStatuses.OK) {
+        task = Object.assign(task, response.data);
+        this.setState({ tasks, isLoading: false, messages: response.messages });
+      } else {
+        this.setState({ isLoading: false, messages: response.messages });
+      }
+    });
+
+
+    // let color = priority.priorityColor;
+    // if (color === 'red') {
+    //   color = 'green';
+    // } else {
+    //   color = 'red';
+    // }
+  }
+
+  removeTask(id) {
+    const { tasks } = this.state;
+    const task = tasks.find((item) => item.id === id);
+
+    this.setState({ isLoading: true });
+    createRequest('deleteTask', { id }, { }).then((response) => {
+      if (response.status === responseStatuses.OK) {
+        const itemIndex = tasks.indexOf(task);
+        tasks.slice(itemIndex, 1);
+
+        this.setState({ tasks, isLoading: false, messages: response.messages });
+      } else {
+        this.setState({ isLoading: false, messages: response.messages });
+      }
+    });
   }
 
   render() {
@@ -137,17 +117,24 @@ class TodoList extends Component {
 
     return div({ className: 'tasks' }, [
       div(
-        { className: 'tasks__list', key: 'list-active' },
+        {
+          className: className({
+            name: 'tasks__list',
+            mods: { loading: isLoading },
+          }),
+          key: 'list-active',
+        },
         [
           h2({ className: 'tasks__title', key: 'title-active' }, 'In progress'),
         ],
-        activeTasks.map((item) => createElement(TodoItem, {
+        activeTasks.map((item) => createElement(Task, {
           item,
-          toggleTodo: this.toggleTodo,
+          toggleTask: this.toggleTask,
           togglePriority: this.togglePriority,
+          removeTask: this.removeTask,
           key: item.id,
         })),
-        createElement(AddTodo, { addTodo: this.addTodo, key: 'addTodo' }),
+        createElement(AddTask, { addTask: this.addTask, key: 'addTask' }),
 
         messages.length === 0 && !isLoading
           && div({ className: 'tasks_empty' }, locale.empty),
@@ -160,23 +147,17 @@ class TodoList extends Component {
         [
           h2({ className: 'tasks__title', key: 'title-done' }, 'Done'),
         ],
-        doneTasks.map((item) => createElement(TodoItem, {
+        doneTasks.map((item) => createElement(Task, {
           item,
-          toggleTodo: this.toggleTodo,
+          toggleTask: this.toggleTask,
           togglePriority: this.togglePriority,
+          removeTask: this.removeTask,
           key: item.id,
         }))
       ),
     ]);
   }
-
-/*  remove(id) {
-    const { tasks, isLoading } = this.state;
-    const itemToDelete = tasks.find((item) => item.id === id);
-    const itemIndex = tasks.indexOf(itemToDelete);
-    tasks.slice(itemIndex, 1);
-  } */
 }
 
 
-module.exports = TodoList;
+module.exports = TasksList;

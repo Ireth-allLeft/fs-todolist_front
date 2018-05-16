@@ -5,7 +5,7 @@ const className = require('class-name/class-name');
 
 const propTypes = {
   item: PropTypes.object.isRequired,
-  toggleTodo: PropTypes.func.isRequired,
+  toggleTask: PropTypes.func.isRequired,
 };
 function priority(item) {
   if (item.priorityColor === 'red') {
@@ -29,10 +29,10 @@ function timeConverter(item) {
 }
 
 
-const TodoItem = ({ item, toggleTodo, togglePriority }) => div(
+const Task = ({ item, toggleTask, togglePriority, removeTask }) => div(
   {
     className: className({ name: 'task', mods: { done: item.isCompleted } }),
-    onClick: toggleTodo.bind(null, item.id),
+    onClick: toggleTask.bind(null, item.id),
   },
   [
     div({
@@ -41,15 +41,20 @@ const TodoItem = ({ item, toggleTodo, togglePriority }) => div(
     }),
   ],
   [
-    time({ className: 'task__added-time', key: item.addedDate }, timeConverter(item)),
+    time({
+      className: 'task__added-time',
+      key: item.addedDate,
+    }, timeConverter(item)),
   ],
   item.text,
   [
-    div({ className: 'delete-icon', key: `${item.id}-delete`/* , onClick: item.remove(item.id) */ }, []),
-
+    div({
+      className: 'delete-icon',
+      onClick: removeTask.bind(null, item.id),
+    }),
   ]
 );
 
-TodoItem.propTypes = propTypes;
+Task.propTypes = propTypes;
 
-module.exports = TodoItem;
+module.exports = Task;

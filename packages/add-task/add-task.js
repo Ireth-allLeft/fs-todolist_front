@@ -2,9 +2,9 @@ const PropTypes = require('prop-types');
 const { form, input, button } = require('react-dom-factories');
 
 
-const propTypes = { addTodo: PropTypes.func.isRequired };
+const propTypes = { addTask: PropTypes.func.isRequired };
 
-const AddTodo = ({ addTodo }) => {
+const AddTask = ({ addTask }) => {
   let inputElement;
 
   const onSubmit = (event) => {
@@ -13,7 +13,7 @@ const AddTodo = ({ addTodo }) => {
     if (!inputElement.value.trim()) {
       return;
     }
-    addTodo(inputElement.value);
+    addTask(inputElement.value);
     inputElement.value = '';
   };
 
@@ -30,18 +30,6 @@ const AddTodo = ({ addTodo }) => {
   ]);
 };
 
+AddTask.propTypes = propTypes;
 
-/* form({ className: 'add-todo', onSubmit }, [
-  label({ className: 'add-todo_label', htmlFor: 'text', key: 'label' }, locale.textLabel),
-  input({
-    className: 'add-todo_field',
-    type: 'text',
-    id: 'text',
-    ref: (el) => { inputElement = el; },
-    key: 'input',
-  }),
-  button({ className: 'add-todo_button', type: 'submit', key: 'button' }, locale.buttonLabel),
-]); */
-AddTodo.propTypes = propTypes;
-
-module.exports = AddTodo;
+module.exports = AddTask;
