@@ -23,12 +23,4 @@ module.exports = {
     path: '/api/v001/tasks/:id',
     method: 'DELETE',
   },
-  changePriorityToLow: {
-    path: 'api/v001/tasks/:id',
-    method: 'PATCH',
-  },
-  changePriorityToHigh: {
-    path: 'api/v001/tasks/:id',
-    method: 'PATCH',
-  },
 };

@@ -12,11 +12,6 @@ const Message = ({ message }) => (
     { className: className({ name: 'message', mods: message.type }) },
     message.value || locale.messages[message.code] || locale.messages.DEFAULT_ERROR
   )
-
-  /*
-  <div className={className({ name: 'message', mods: [message.type] })}>
-    {message.value || locale.messages[message.code] || locale.messages.DEFAULT_ERROR}
-  </div> */
 );
 
 Message.propTypes = propTypes;

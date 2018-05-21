@@ -28,6 +28,9 @@ function timeConverter(item) {
   return convertTime;
 }
 
+function requiredTime(item) {
+  return Date.now() - item.addedDate;
+}
 
 const Task = ({ item, toggleTask, togglePriority, removeTask }) => div(
   {
@@ -38,6 +41,8 @@ const Task = ({ item, toggleTask, togglePriority, removeTask }) => div(
     div({
       className: className({ name: 'task__color', mods: { 'high-priority': priority(item) } }),
       onClick: togglePriority.bind(null, item.id),
+      key: `${item.id}-color`,
+
     }),
   ],
   [
@@ -47,10 +52,12 @@ const Task = ({ item, toggleTask, togglePriority, removeTask }) => div(
     }, timeConverter(item)),
   ],
   item.text,
+  item.isComplited && div({ className: 'task__done-time' }, timeConverter(requiredTime(item))),
   [
     div({
       className: 'delete-icon',
       onClick: removeTask.bind(null, item.id),
+      key: `${item.id}-delete`,
     }),
   ]
 );

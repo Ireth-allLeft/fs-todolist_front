@@ -21,12 +21,14 @@ class TasksList extends Component {
 
     this.addTask = this.addTask.bind(this);
     this.toggleTask = this.toggleTask.bind(this);
+    this.togglePriority = this.togglePriority.bind(this);
     this.removeTask = this.removeTask.bind(this);
   }
 
   componentDidMount() {
     createRequest('fetchTasks').then((response) => {
       this.setState({ tasks: response.data || [], isLoading: false, messages: response.messages });
+      console.log(response.messages, response.status);
     });
   }
 
@@ -64,14 +66,13 @@ class TasksList extends Component {
     let task = tasks.find((item) => item.id === id);
 
     function priority(item) {
-		  if (item.priorityColor === 'red') {
-		    return true;
-		  }
-		  return false;
+      if (item.priorityColor === 'red') {
+        return 'green';
+      }
+      return 'red';
     }
-
     this.setState({ isLoading: true });
-    createRequest('changePriorityToHigh', { id }, { priorityColor: 'red' }).then((response) => {
+    createRequest('updateTask', { id }, { priorityColor: priority(task) }).then((response) => {
       if (response.status === responseStatuses.OK) {
         task = Object.assign(task, response.data);
         this.setState({ tasks, isLoading: false, messages: response.messages });
@@ -79,19 +80,14 @@ class TasksList extends Component {
         this.setState({ isLoading: false, messages: response.messages });
       }
     });
-
-
-    // let color = priority.priorityColor;
-    // if (color === 'red') {
-    //   color = 'green';
-    // } else {
-    //   color = 'red';
-    // }
   }
 
-  removeTask(id) {
+  removeTask(event, id) {
+    event.preventDefault();
+    event.stopPropagation();
     const { tasks } = this.state;
     const task = tasks.find((item) => item.id === id);
+
 
     this.setState({ isLoading: true });
     createRequest('deleteTask', { id }, { }).then((response) => {
@@ -135,12 +131,11 @@ class TasksList extends Component {
           key: item.id,
         })),
         createElement(AddTask, { addTask: this.addTask, key: 'addTask' }),
-
         messages.length === 0 && !isLoading
           && div({ className: 'tasks_empty' }, locale.empty),
 
         !isLoading && messages.length > 0
-          && Messages({ messages })
+          && Messages(messages)
       ),
       div(
         { className: 'tasks__list', key: 'list-done' },

@@ -9,10 +9,6 @@ const Messages = ({ messages }) => div(
   { className: 'messages', key: 'messages' },
   messages.map((message) => Message({ message, key: message.code }))
 );
-  /* <div className='messages'>
-  {messages.map((message) => <Message message={message} key={message.code}/>)}
-</div> */
-
 
 Messages.propTypes = propTypes;
 

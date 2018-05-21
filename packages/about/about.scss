@@ -1,0 +1,14 @@
+.about {
+margin: 50px;
+	padding: 50px;
+
+	background-color: rgba(0,0,0,0.2);
+
+	&__header {
+		text-align:center;
+		
+	}
+	&__text {
+		line-height: 2;
+	}
+}

@@ -5,9 +5,10 @@
 .tasks {
   display: flex;
   flex-wrap: wrap;
+  // width: 1000px;
+  // margin: 48px auto;
 
-  width: 1000px;
-  margin: 48px auto;
+	margin: 50px;
   padding: 40px;
 
 	border-radius: 2px;
@@ -16,7 +17,7 @@
 
 
   &__list {
-		flex-basis: 400px;
+		flex-basis: 600px;
 
 		box-sizing: border-box;
 		min-height: 500px;
