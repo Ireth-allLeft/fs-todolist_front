@@ -1,5 +1,5 @@
 const { createElement, Component } = require('react');
-const { div, h2 } = require('react-dom-factories');
+const { div, h2, input } = require('react-dom-factories');
 const Task = require('task/task');
 const AddTask = require('add-task/add-task');
 const className = require('class-name/class-name');
@@ -23,12 +23,13 @@ class TasksList extends Component {
     this.toggleTask = this.toggleTask.bind(this);
     this.togglePriority = this.togglePriority.bind(this);
     this.removeTask = this.removeTask.bind(this);
+    // this.editText = this.editText.bind(this);
   }
 
   componentDidMount() {
     createRequest('fetchTasks').then((response) => {
       this.setState({ tasks: response.data || [], isLoading: false, messages: response.messages });
-      console.log(response.messages, response.status);
+      console.log(response);
     });
   }
 
@@ -61,8 +62,11 @@ class TasksList extends Component {
     });
   }
 
-  togglePriority(id) {
+  togglePriority(event) {
+    event.preventDefault();
+    event.stopPropagation();
     const { tasks } = this.state;
+    const id = event.currentTarget.dataset.taskId;
     let task = tasks.find((item) => item.id === id);
 
     function priority(item) {
@@ -82,18 +86,19 @@ class TasksList extends Component {
     });
   }
 
-  removeTask(event, id) {
+  removeTask(event) {
     event.preventDefault();
     event.stopPropagation();
-    const { tasks } = this.state;
-    const task = tasks.find((item) => item.id === id);
-
+    let { tasks } = this.state;
+    const id = event.currentTarget.dataset.taskId;
+    // const task = tasks.find((item) => item.id === id);
 
     this.setState({ isLoading: true });
     createRequest('deleteTask', { id }, { }).then((response) => {
       if (response.status === responseStatuses.OK) {
-        const itemIndex = tasks.indexOf(task);
-        tasks.slice(itemIndex, 1);
+        // const itemIndex = tasks.indexOf(task);
+        // tasks = tasks.slice(itemIndex, 1);
+        tasks = tasks.filter((item)=> item.id !== id);
 
         this.setState({ tasks, isLoading: false, messages: response.messages });
       } else {
@@ -101,6 +106,24 @@ class TasksList extends Component {
       }
     });
   }
+
+  // editText(event) {
+  //   event.preventDefault();
+  //   event.stopPropagation();
+  //   const { tasks } = this.state;
+  //   const id = event.currentTarget.dataset.taskId;
+  //   let task = tasks.find((item) => item.id === id);
+  //
+  //
+  //   createRequest('updateTask', { id }, { edit: true }).then((response) => {
+  //     if (response.status === responseStatuses.OK) {
+  //       task = Object.assign(task, response.data);
+  //       this.setState({ tasks, isLoading: false, messages: response.messages });
+  //     } else {
+  //       this.setState({ isLoading: false, messages: response.messages });
+  //     }
+  //   });
+  // }
 
   render() {
     const { tasks, isLoading, messages } = this.state;
@@ -131,11 +154,11 @@ class TasksList extends Component {
           key: item.id,
         })),
         createElement(AddTask, { addTask: this.addTask, key: 'addTask' }),
-        messages.length === 0 && !isLoading
+        activeTasks.length === 0 && !isLoading
           && div({ className: 'tasks_empty' }, locale.empty),
 
         !isLoading && messages.length > 0
-          && Messages(messages)
+          && createElement(Messages, { messages })
       ),
       div(
         { className: 'tasks__list', key: 'list-done' },

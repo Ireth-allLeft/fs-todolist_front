@@ -63,6 +63,7 @@
     }
 	}
 
+
 }
 .delete-icon {
   width: 30px;
@@ -80,4 +81,18 @@
   &:hover {
     opacity: 0.5;
   }
+}
+
+.text {
+  &_edit {
+    display: none;
+  }
+
+}
+
+.edit{
+ display: none;
+	&_active {
+		display: block;
+	}
 }

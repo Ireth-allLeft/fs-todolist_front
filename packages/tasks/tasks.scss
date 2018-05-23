@@ -26,15 +26,17 @@
 
 		background:#FFF9C4;
 		box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.9);
+		&_loading {
+			background: #E5D9E0 url(image/load.gif) no-repeat center 20px;
+			
+		}
   };
 
 	&__title {
 		color: #009688;
 	}
 
-  &_loading {
-    background: rgba(0,0,0,0.2) url(image/load.gif) no-repeat center 20px;
-}
+
 }
 .add-task {
 	margin-left: 20px;
@@ -65,4 +67,3 @@
 
 	}
 }
-

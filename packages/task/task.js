@@ -6,6 +6,7 @@ const className = require('class-name/class-name');
 const propTypes = {
   item: PropTypes.object.isRequired,
   toggleTask: PropTypes.func.isRequired,
+  removeTask: PropTypes.func.isRequired,
 };
 function priority(item) {
   if (item.priorityColor === 'red') {
@@ -16,7 +17,7 @@ function priority(item) {
 
 
 function timeConverter(item) {
-  const a = new Date(item.addedDate);
+  const a = new Date(item);
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const year = a.getFullYear();
   const month = months[a.getMonth()];
@@ -29,10 +30,10 @@ function timeConverter(item) {
 }
 
 function requiredTime(item) {
-  return Date.now() - item.addedDate;
+  return Date.now();
 }
 
-const Task = ({ item, toggleTask, togglePriority, removeTask }) => div(
+const Task = ({ item, toggleTask, togglePriority, removeTask, editText, setNewTaskText }) => div(
   {
     className: className({ name: 'task', mods: { done: item.isCompleted } }),
     onClick: toggleTask.bind(null, item.id),
@@ -40,7 +41,8 @@ const Task = ({ item, toggleTask, togglePriority, removeTask }) => div(
   [
     div({
       className: className({ name: 'task__color', mods: { 'high-priority': priority(item) } }),
-      onClick: togglePriority.bind(null, item.id),
+      onClick: togglePriority,
+      'data-task-id': item.id,
       key: `${item.id}-color`,
 
     }),
@@ -49,14 +51,22 @@ const Task = ({ item, toggleTask, togglePriority, removeTask }) => div(
     time({
       className: 'task__added-time',
       key: item.addedDate,
-    }, timeConverter(item)),
+    }, timeConverter(item.addedDate)),
   ],
-  item.text,
-  item.isComplited && div({ className: 'task__done-time' }, timeConverter(requiredTime(item))),
+  [
+    div({
+      className: 'text',
+      onClick: editText,
+      'data-task-id': item.id,
+      'data-task-text': item.text,
+      key: `${item.id}-text`,
+    }, item.text),
+  ],
   [
     div({
       className: 'delete-icon',
-      onClick: removeTask.bind(null, item.id),
+      onClick: removeTask,
+      'data-task-id': item.id,
       key: `${item.id}-delete`,
     }),
   ]
