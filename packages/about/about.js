@@ -1,5 +1,4 @@
 const { div, h2, p } = require('react-dom-factories');
-const className = require('class-name/class-name');
 const description = require('core/description.js');
 
 

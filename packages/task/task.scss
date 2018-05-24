@@ -1,20 +1,22 @@
 @import url('https://fonts.googleapis.com/css?family=Indie+Flower|Nunito');
 
 .task {
-	display: flex;
+  display: flex;
   flex-wrap: wrap;
 
-	margin-top: 10px;
+	max-width: 500px;
+	min-height: 50px;
+  margin-top: 10px;
   padding: 8px 24px;
 
   cursor: pointer;
 
-	border-radius: 3px;
-	background-color: #F9A825;
-	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.9);
+  border-radius: 3px;
+  background-color: #f9a825;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.9);
 
   font-family: 'Indie Flower', cursive;
-	font-size: 20px;
+  font-size: 20px;
 
   & + & {
     border-top: 1px solid #ccc;
@@ -23,53 +25,53 @@
   &_done {
     text-decoration: line-through;
 
-	  background-color: #EEEEEE;
+    background-color: #eeeeee;
   }
 
-	&__added-time {
+  &__added-time {
     width: 90%;
-		padding: 5px;
+    padding: 5px;
 
-		color: #424242;
+    color: #424242;
 
-		font-family: 'Nunito', sans-serif;
-		font-size: 15px;
-		font-weight: bold;
-	}
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+  }
   &__color {
-		width: 12px;
-		height: 12px;
-		margin: 10px  5px;
+    width: 12px;
+    height: 12px;
+    margin: 10px 5px;
 
     transition: opacity 1s;
 
-		border-radius: 50%;
-		background-color: #00C853;
+    border-radius: 50%;
+    background-color: #00c853;
     &:hover {
       opacity: 0.2;
-			background-color: #D32F2F;
+      background-color: #d32f2f;
     }
     &:active {
-      background-color: #D32F2F;
+      background-color: #d32f2f;
     }
-    &_high-priority{
-      background-color: #D32F2F;
+    &_high-priority {
+      background-color: #d32f2f;
       &:active {
-        background-color: #00C853;
+        background-color: #00c853;
       }
       &:hover {
-        background-color:  #00C853;
+        background-color: #00c853;
       }
     }
-	}
-
-
+  }
 }
 .delete-icon {
+  position: absolute;
+
   width: 30px;
   height: 30px;
-  margin-bottom: 10px;
-  margin-left: 330px;
+  margin-top: 20px;
+  margin-left: 480px;
 
   background: url(image/delete-icon.png) no-repeat;
   background-size: cover;
@@ -82,17 +84,36 @@
     opacity: 0.5;
   }
 }
-
 .text {
-  &_edit {
-    display: none;
-  }
+	margin-right: 20px;
 
+	word-break: break-all;
 }
 
-.edit{
- display: none;
-	&_active {
-		display: block;
-	}
+.task-field {
+  margin: 10px;
+  padding: 5px 25px;
+
+  border: 1px dashed #ccc;
+  border-radius: 2px;
+
+  font-family: 'Indie Flower', cursive;
+  font-size: 20px;
+}
+
+.button {
+  padding: 10px;
+
+  cursor: pointer;
+
+  color: #2196f3;
+  border: 2px solid #000;
+  border-radius: 3px;
+  background-color: #bbdefb;
+}
+
+.edit-task {
+  &__field {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
 }

@@ -2,13 +2,12 @@
 @import 'packages/about/about.scss';
 @import url('https://fonts.googleapis.com/css?family=Pangolin');
 
-
 html,
 body {
   margin: 0;
   padding: 0;
 
-  background: #4DB6AC;
+  background: #4db6ac;
 
   font-family: 'Pangolin', sans-serif;
 }
@@ -21,7 +20,7 @@ body {
 
   text-align: center;
 
-  background-color: #26A69A;;
+  background-color: #26a69a;
 }
 
 .header__icon {
@@ -34,21 +33,20 @@ body {
   background: center url(image/panther.png) no-repeat;
   background-size: contain;
 
-  font-size: 30px;;
+  font-size: 30px;
 }
 
 .link {
-	margin: 10px;
+  margin: 10px;
 
-	text-decoration: none;
+  text-decoration: none;
 
-	color: #000;
+  color: #000;
 
-	&:hover {
-		color: #F9A825;
-	}
-	&:active {
-		color: #EEEEEE;
-
-	}
+  &:hover {
+    color: #f9a825;
+  }
+  &:active {
+    color: #eeeeee;
+  }
 }

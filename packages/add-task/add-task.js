@@ -19,14 +19,14 @@ const AddTask = ({ addTask }) => {
 
   return form({ className: 'add-task', onSubmit }, [
     input({
-      className: 'add-task__field',
+      className: 'add-task__field task-field',
       type: 'text',
       id: 'text',
       placeholder: 'New task',
       ref: (el) => { inputElement = el; },
       key: 'input',
     }),
-    button({ className: 'add-task__button', type: 'submit', key: 'button' }, ['Add']),
+    button({ className: 'button add-task__button', type: 'submit', key: 'button' }, ['Add']),
   ]);
 };
 
