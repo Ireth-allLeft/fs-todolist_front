@@ -149,7 +149,7 @@ class TasksList extends Component {
         })),
         createElement(AddTask, { addTask: this.addTask, key: 'addTask' }),
         activeTasks.length === 0 && !isLoading
-          && div({ className: 'tasks_empty' }, locale.empty),
+          && div({ className: 'message' }, locale.empty),
 
         !isLoading && messages.length > 0
           && createElement(Messages, { messages })
@@ -164,8 +164,11 @@ class TasksList extends Component {
           toggleTask: this.toggleTask,
           togglePriority: this.togglePriority,
           removeTask: this.removeTask,
+          editText: this.editText,
           key: item.id,
-        }))
+        })),
+        doneTasks.length === 0 && !isLoading
+          && div({ className: 'message' }, locale.emptyDone)
       ),
     ]);
   }

@@ -21,10 +21,11 @@ function timeConverter(item) {
   return convertTime;
 }
 
+
 class Task extends Component {
   constructor(props) {
     super(props);
-    this.state = { isEdit: false };
+    this.state = { isEdit: false, value: this.props.item.text };
     this.editStart = this.editStart.bind(this);
     this.editEnd = this.editEnd.bind(this);
   }
@@ -55,12 +56,19 @@ class Task extends Component {
         inputElement.value = '';
       }
     };
+    const onChange = (event) => {
+      event.preventDefault();
+      this.setState({ value: event.target.value });
+    };
 
     return div(
       {
         className: className({
           name: 'task',
-          mods: { done: this.props.item.isCompleted },
+          mods: {
+            done: this.props.item.isCompleted,
+            fire: this.props.item.priorityColor === 'red' && !this.props.item.isCompleted,
+          },
         }),
         onDoubleClick: this.props.toggleTask.bind(null, this.props.item.id),
       },
@@ -72,6 +80,7 @@ class Task extends Component {
           }),
           onClick: this.props.togglePriority,
           'data-task-id': this.props.item.id,
+          'data-tooltip': 'change priority',
           key: `${this.props.item.id}-color`,
         }),
 
@@ -106,6 +115,8 @@ class Task extends Component {
                 type: 'text',
                 id: 'text',
                 placeholder: this.props.item.text,
+                value: this.state.value,
+                onChange,
                 ref: (el) => {
                   inputElement = el;
                 },
