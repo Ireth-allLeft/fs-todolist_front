@@ -1,5 +1,5 @@
 const { createElement, Component } = require('react');
-const { div, h2, input } = require('react-dom-factories');
+const { div, h2 } = require('react-dom-factories');
 const Task = require('task/task');
 const AddTask = require('add-task/add-task');
 const className = require('class-name/class-name');
@@ -23,7 +23,7 @@ class TasksList extends Component {
     this.toggleTask = this.toggleTask.bind(this);
     this.togglePriority = this.togglePriority.bind(this);
     this.removeTask = this.removeTask.bind(this);
-    // this.editText = this.editText.bind(this);
+    this.editText = this.editText.bind(this);
   }
 
   componentDidMount() {
@@ -91,13 +91,10 @@ class TasksList extends Component {
     event.stopPropagation();
     let { tasks } = this.state;
     const id = event.currentTarget.dataset.taskId;
-    // const task = tasks.find((item) => item.id === id);
 
     this.setState({ isLoading: true });
     createRequest('deleteTask', { id }, { }).then((response) => {
       if (response.status === responseStatuses.OK) {
-        // const itemIndex = tasks.indexOf(task);
-        // tasks = tasks.slice(itemIndex, 1);
         tasks = tasks.filter((item)=> item.id !== id);
 
         this.setState({ tasks, isLoading: false, messages: response.messages });
@@ -107,23 +104,19 @@ class TasksList extends Component {
     });
   }
 
-  // editText(event) {
-  //   event.preventDefault();
-  //   event.stopPropagation();
-  //   const { tasks } = this.state;
-  //   const id = event.currentTarget.dataset.taskId;
-  //   let task = tasks.find((item) => item.id === id);
-  //
-  //
-  //   createRequest('updateTask', { id }, { edit: true }).then((response) => {
-  //     if (response.status === responseStatuses.OK) {
-  //       task = Object.assign(task, response.data);
-  //       this.setState({ tasks, isLoading: false, messages: response.messages });
-  //     } else {
-  //       this.setState({ isLoading: false, messages: response.messages });
-  //     }
-  //   });
-  // }
+  editText(text, id) {
+    const { tasks } = this.state;
+    let task = tasks.find((item) => item.id === id);
+
+    createRequest('updateTask', { id }, { text }).then((response) => {
+      if (response.status === responseStatuses.OK) {
+        task = Object.assign(task, response.data);
+        this.setState({ tasks, isLoading: false, messages: response.messages });
+      } else {
+        this.setState({ isLoading: false, messages: response.messages });
+      }
+    });
+  }
 
   render() {
     const { tasks, isLoading, messages } = this.state;
@@ -151,11 +144,12 @@ class TasksList extends Component {
           toggleTask: this.toggleTask,
           togglePriority: this.togglePriority,
           removeTask: this.removeTask,
+          editText: this.editText,
           key: item.id,
         })),
         createElement(AddTask, { addTask: this.addTask, key: 'addTask' }),
         activeTasks.length === 0 && !isLoading
-          && div({ className: 'tasks_empty' }, locale.empty),
+          && div({ className: 'message' }, locale.empty),
 
         !isLoading && messages.length > 0
           && createElement(Messages, { messages })
@@ -170,8 +164,11 @@ class TasksList extends Component {
           toggleTask: this.toggleTask,
           togglePriority: this.togglePriority,
           removeTask: this.removeTask,
+          editText: this.editText,
           key: item.id,
-        }))
+        })),
+        doneTasks.length === 0 && !isLoading
+          && div({ className: 'message' }, locale.emptyDone)
       ),
     ]);
   }

@@ -1,25 +1,17 @@
 .add-task {
-  margin-top: 40px;
-  
-  &_label {
-    display: block;
-  }
+	margin-top: 30px;
+	margin-left: 20px;
 
-  &_field {
-    display: block;
+	&__field {
+		min-width: 400px; 
 
-    margin-top: 8px;
-    padding: 8px 24px;
+		&::placeholder {
+			color: #1565C0;
+		}
 
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
+	}
 
-  &_button {
-    margin-top: 8px;
-    padding: 8px 24px;
+	&__button {
 
-    border: 1px solid #ccc;
-    border-radius: 3px;
-  }
+	}
 }

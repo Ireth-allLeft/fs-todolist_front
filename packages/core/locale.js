@@ -1,7 +1,8 @@
 module.exports = {
   messages: {
-    DEFAULT_ERROR: 'Что то пошло не так, мы уже разбираемся в чем дело',
-    CAN_NOT_FIND_TASK: 'Задача не найдена, попробуйте обновить страницу',
+    DEFAULT_ERROR: 'Something\'s gone wrong.',
+    CAN_NOT_FIND_TASK: 'The task is not found.',
   },
-  empty: 'There is no task here',
+  empty: 'You don\'t have any new tasks yet. Enjoy your day.',
+  emptyDone: 'There\'s nothing here yet but I believe in you!',
 };

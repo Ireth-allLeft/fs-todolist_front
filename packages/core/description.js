@@ -1,6 +1,11 @@
 module.exports = {
   descriptionText: {
-    intro: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    priority: 'Red and green marks',
+    intro: 'Welcome to the Pink Panther\'s To Do List! Panther will help you organize your plans, sorting tasks in two columns ("Done" and "In Progress") and prioritizing them with green or red color.',
+    instr: 'Please, read the instructions below:',
+    priority: 'Low priority tasks have a green mark. Click on the mark to change the priority to High.',
+    add: 'To add a new task type it\'s description in the text field and press Enter or click the Add button.',
+    edit: 'Click on the description of a task to edit it. To confirm the edition click the Edit button or press Enter.',
+    done: 'After you have completed a task double click on it to move it to another column. Double click the task again to move it back to To Do column.',
+    delete: 'To delete a task click on the "cross" icon.',
   },
 };
