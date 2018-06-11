@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css?family=Indie+Flower|Nunito');
+
+.task {
+  display: flex;
+  flex-wrap: wrap;
+
+  max-width: 500px;
+  min-height: 50px;
+  margin-top: 10px;
+  padding: 8px 24px;
+
+  cursor: pointer;
+
+  border-radius: 3px;
+  background-color: #f9a825;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.9);
+
+  font-family: 'Indie Flower', cursive;
+  font-size: 20px;
+
+  & + & {
+    border-top: 1px solid #ccc;
+  }
+
+  &_done {
+    text-decoration: line-through;
+
+    background-color: #eeeeee;
+  }
+
+  &__added-time {
+    width: 90%;
+    padding: 5px;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+
+    color: #424242;
+
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+  }
+
+  &_fire {
+    color: #fff;
+    background-image: url(image/fire2.gif);
+    text-shadow: 1px 1px 1px #fff;
+  }
+  &__color {
+    position: relative;
+
+    width: 12px;
+    height: 12px;
+    margin: 10px 5px;
+
+    transition: opacity 1s;
+
+    border-radius: 50%;
+    background-color: #00c853;
+    &:hover {
+      opacity: 0.7;
+      background-color: #d32f2f;
+    }
+    &:hover::after {
+      position: absolute;
+      z-index: 1;
+      top: 30%;
+      right: 25%;
+
+      padding: 10px 20px;
+
+      content: attr(data-tooltip);
+
+      color: #00c853;
+      border: 1px solid #333;
+      background: rgba(255, 255, 230, 0.9);
+    }
+    &:active {
+      background-color: #d32f2f;
+    }
+    &_high-priority {
+      background-color: #d32f2f;
+      &:active {
+        background-color: #00c853;
+      }
+      &:hover {
+        background-color: #00c853;
+      }
+    }
+  }
+}
+.delete-icon {
+  position: absolute;
+
+  width: 30px;
+  height: 30px;
+  margin-top: 20px;
+  margin-left: 480px;
+
+  background: url(image/delete-icon.png) no-repeat;
+  background-size: cover;
+
+  &:active {
+    border-radius: 50%;
+    background-color: #ccc;
+  }
+  &:hover {
+    opacity: 0.5;
+  }
+}
+.text {
+  margin-right: 20px;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  word-break: break-all;
+}
+
+.task-field {
+  margin: 10px;
+  padding: 5px 25px;
+
+  border: 1px dashed #ccc;
+  border-radius: 2px;
+
+  font-family: 'Indie Flower', cursive;
+  font-size: 20px;
+}
+
+.button {
+  padding: 10px;
+
+  cursor: pointer;
+
+  color: #2196f3;
+  border: 2px solid #000;
+  border-radius: 3px;
+  background-color: #bbdefb;
+}
+
+.edit-task {
+  &__field {
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+}

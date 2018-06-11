@@ -1,0 +1,52 @@
+@import 'packages/tasks/tasks.scss';
+@import 'packages/about/about.scss';
+@import url('https://fonts.googleapis.com/css?family=Pangolin');
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+
+  background: #4db6ac;
+
+  font-family: 'Pangolin', sans-serif;
+}
+
+.header {
+  box-sizing: border-box;
+  width: 100%;
+  height: 150px;
+  padding: 30px;
+
+  text-align: center;
+
+  background-color: #26a69a;
+}
+
+.header__icon {
+  box-sizing: border-box;
+  width: 150px;
+  height: 100px;
+  margin: 0 auto;
+  padding: 50px 5px;
+
+  background: center url(image/panther.png) no-repeat;
+  background-size: contain;
+
+  font-size: 30px;
+}
+
+.link {
+  margin: 10px;
+
+  text-decoration: none;
+
+  color: #000;
+
+  &:hover {
+    color: #f9a825;
+  }
+  &:active {
+    color: #eeeeee;
+  }
+}

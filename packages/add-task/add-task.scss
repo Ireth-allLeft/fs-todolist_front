@@ -1,0 +1,17 @@
+.add-task {
+	margin-top: 30px;
+	margin-left: 20px;
+
+	&__field {
+		min-width: 400px; 
+
+		&::placeholder {
+			color: #1565C0;
+		}
+
+	}
+
+	&__button {
+
+	}
+}
